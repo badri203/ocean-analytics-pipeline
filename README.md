@@ -214,6 +214,9 @@ ocean-analytics-pipeline/
 └── dashboard/         ← Looker Studio screenshots
 ```
 
+## Dashboard
+https://lookerstudio.google.com/reporting/79f0c287-496e-44b7-827c-7776e135df8d
+
 ## Pipeline Design Decisions
 
 **Why streaming + batch?**
