@@ -1,56 +1,39 @@
-cat > /workspaces/ocean-analytics-pipeline/README.md << 'EOF'
-
-## Problem Statement
-
-Our oceans cover 71% of Earth's surface and are the primary driver of global climate, weather patterns, and biodiversity. Yet real-time ocean monitoring data is scattered across dozens of agencies, APIs, and research institutions — making it nearly impossible for researchers, conservationists, and policymakers to get a unified view of what's happening in our oceans right now.
-
-This project addresses three interconnected questions:
-
-**1. What are current ocean conditions globally?**
-NOAA operates 900+ buoys across every ocean, each reporting wave height, water temperature, wind speed, and pressure every hour. This data exists but is buried in raw text files that require significant effort to access and interpret.
-
-**2. Where are marine mammals being sighted, and is that changing?**
-Marine mammal populations are key indicators of ocean ecosystem health. Whale and dolphin sighting data exists through organizations like OBIS, but correlating it with environmental conditions requires joining datasets that were never designed to work together.
-
-**3. How do extreme events like storms and earthquakes affect ocean systems?**
-Seismic and storm events directly impact ocean conditions and marine wildlife behavior. Understanding these correlations requires a pipeline that can process multiple data streams simultaneously.
-
-### The Solution
-
-This pipeline ingests live data from NOAA buoys, marine mammal observation databases, and seismic monitoring systems — streams it through a unified GCP data platform — and presents it in an interactive dashboard that answers these questions in real time.
-
-The result: a single dashboard that shows ocean temperature anomalies, marine wildlife activity trends, and environmental event correlations — updated continuously from live data sources.
-
 # Ocean Analytics Pipeline
 
 An end-to-end oceanographic data pipeline built on GCP, streaming live ocean buoy readings and marine wildlife sightings through Pub/Sub, Dataflow, and BigQuery to a Looker Studio dashboard.
 
-
 ## Problem Statement
 
-Our oceans cover 71% of Earth's surface and are the primary driver of global climate, weather patterns, and biodiversity. Yet real-time ocean monitoring data is scattered across dozens of agencies, APIs, and research institutions — making it nearly impossible for researchers, conservationists, and policymakers to get a unified view of what is happening in our oceans right now.
+Ocean monitoring data is fragmented across multiple systems, making it difficult to analyze environmental conditions, marine life activity, and extreme events together in real time. This limits our ability to detect patterns, understand ecosystem changes, and respond quickly to emerging risks.
 
-This project addresses three interconnected questions:
+This project builds a **real-time environmental intelligence system** on Google Cloud Platform that ingests and unifies ocean buoy sensor data, marine wildlife sightings, and seismic events — enabling researchers and policymakers to identify emerging ocean anomalies, correlate environmental conditions with marine life behavior, and respond to ecosystem changes in near real time.
+
+### The Core Questions This System Answers
 
 **1. What are current ocean conditions globally?**
-NOAA operates 900+ buoys across every ocean, each reporting wave height, water temperature, wind speed, and pressure every hour. This data exists but is buried in raw text files that require significant effort to access and interpret.
+NOAA operates 900+ buoys across every ocean, each reporting wave height, water temperature, wind speed, and pressure every hour. This data exists but is buried in raw text files across dozens of endpoints. This system unifies it into a queryable, continuously updated warehouse.
 
 **2. Where are marine mammals being sighted, and is that changing?**
-Marine mammal populations are key indicators of ocean ecosystem health. Whale and dolphin sighting data exists through organizations like OBIS, but correlating it with environmental conditions requires joining datasets that were never designed to work together.
+Marine mammal populations are key indicators of ocean ecosystem health. This system correlates whale and dolphin sighting data from OBIS with live buoy readings — enabling questions like: *"Do humpback whale sightings increase when Pacific surface temperatures rise above a certain threshold?"*
 
-**3. How do extreme events like storms and earthquakes affect ocean systems?**
-Seismic and storm events directly impact ocean conditions and marine wildlife behavior. Understanding these correlations requires a pipeline that can process multiple data streams simultaneously.
+**3. How do extreme events affect ocean systems and marine life?**
+Seismic and storm events directly impact ocean conditions and marine wildlife behavior. By streaming these events alongside buoy readings, the system can detect correlations between environmental volatility and changes in wildlife activity patterns.
+
+### A Concrete Example
+
+The system detects rising ocean temperatures across North Atlantic buoy stations, correlates them with an increase in humpback whale sightings in that region, and surfaces both signals simultaneously in the dashboard — giving researchers an early indicator of shifting migration patterns driven by warming seas.
 
 ### The Solution
 
-This pipeline ingests live data from NOAA buoys, marine mammal observation databases, and seismic monitoring systems — streams it through a unified GCP data platform — and presents it in an interactive Looker Studio dashboard that answers these questions in real time.
+This project builds an end-to-end streaming data pipeline on GCP that:
+- Continuously ingests live data from 3 public APIs (no authentication required)
+- Streams events through Pub/Sub and Dataflow into a Bronze/Silver/Gold data lake
+- Loads enrichment reference data via Airflow into a partitioned BigQuery warehouse
+- Presents correlated insights through an interactive Looker Studio dashboard
 
-The result: a single dashboard showing ocean temperature conditions, marine wildlife activity trends, and environmental event correlations — updated continuously from live public data sources with no authentication required.
-
+The result is not just a data pipeline — it is a **decision-support system** for ocean environmental intelligence, updated in near real time from live public data sources.
 
 ## Architecture
-
-![Architecture Diagram](dashboard/architecture.png)
 
 ### Streaming Pipeline (continuous, 24/7)
 ```
@@ -87,7 +70,7 @@ NDBC Station Metadata (weekly)
 |---|---|---|---|
 | NOAA NDBC Buoys | Streaming | Wave height, water temp, wind speed, pressure | None |
 | OBIS Marine Mammals | Streaming | Live whale, dolphin, seal occurrence records | None |
-| USGS/NHC Storm Events | Streaming | Active storm tracks + significant seismic events | None |
+| USGS/NHC Storm Events | Streaming | Active storm tracks and significant seismic events | None |
 | NOAA ERSST | Batch | Historical SST baseline for anomaly calculation | None |
 | OBIS Species Reference | Batch | Historical marine species distribution | None |
 | NOAA MPA Inventory | Batch | Marine protected area boundaries | None |
@@ -98,12 +81,12 @@ NDBC Station Metadata (weekly)
 
 | Resource | Name |
 |---|---|
-| GCS Bucket | `project-a3416167-bd30-4a48-987-ocean-analytics-lake` |
-| BigQuery Dataset | `ocean_analytics` |
-| Pub/Sub Topic | `buoy-readings-topic` |
-| Pub/Sub Topic | `whale-sightings-topic` |
-| Pub/Sub Topic | `storm-tracks-topic` |
-| Pub/Sub Topic | `ocean-dead-letter-topic` |
+| GCS Bucket | project-a3416167-bd30-4a48-987-ocean-analytics-lake |
+| BigQuery Dataset | ocean_analytics |
+| Pub/Sub Topic | buoy-readings-topic |
+| Pub/Sub Topic | whale-sightings-topic |
+| Pub/Sub Topic | storm-tracks-topic |
+| Pub/Sub Topic | ocean-dead-letter-topic |
 
 ## GCS Data Lake Structure
 ```
@@ -125,18 +108,28 @@ gs://project-a3416167-bd30-4a48-987-ocean-analytics-lake/
 ## BigQuery Schema (Star Schema)
 
 ### Fact Tables
-- `fact_buoy_readings` — partitioned by date, clustered by station_id
-- `fact_whale_sightings` — partitioned by date, clustered by species
-- `fact_storm_tracks` — partitioned by date, clustered by basin
+- fact_buoy_readings — partitioned by date, clustered by station_id and source
+- fact_whale_sightings — partitioned by date, clustered by species and source
+- fact_storm_tracks — partitioned by date, clustered by basin and storm_type
 
 ### Dimension Tables
-- `dim_location` — buoy station metadata
-- `dim_species` — marine species reference
-- `dim_mpa` — marine protected area boundaries
+- dim_location — buoy station metadata
+- dim_species — marine species reference
 
-### Reference Tables (loaded by Airflow)
-- `ref_ersst_baseline` — historical SST averages for anomaly calculation
-- `ref_hurdat2_tracks` — historical hurricane tracks
+### Views (Transformations)
+- vw_buoy_daily_summary — daily aggregations per buoy station
+- vw_whale_sightings_by_species — sighting counts and totals per species
+- vw_whale_sightings_timeline — monthly sighting trends over time
+- vw_ocean_temperature_summary — global temperature aggregations
+- vw_storm_events_summary — storm and seismic event summaries
+
+## Dashboard
+
+Live Looker Studio dashboard with 4 tiles:
+1. KPI Scorecards — active buoys, avg ocean temp, whale sightings, avg wave height
+2. Bar chart — marine mammal sightings by species
+3. Pie chart — whale sighting species distribution
+4. Line chart — historical whale sightings over time
 
 ## Setup
 
@@ -183,10 +176,22 @@ cd ingestion/whale && uv run python main.py
 cd ingestion/storm && uv run python main.py
 ```
 
-### 5. Start Airflow
+### 5. Run Dataflow pipeline
+```bash
+cd dataflow
+pip install apache-beam[gcp]
+python pipeline.py --runner DirectRunner
+```
+
+### 6. Start Airflow
 ```bash
 cd airflow
 docker-compose up -d
+```
+
+### 7. Load initial data into BigQuery
+```bash
+python bigquery/load_data.py
 ```
 
 ## Project Structure
@@ -218,8 +223,7 @@ Pub/Sub isolates ingestion volatility from downstream processing. If Dataflow sl
 GCS is the immutable system of record — raw data stored permanently and cheaply, replayable at any time. BigQuery is the serving layer — fast SQL queries with partitioning and clustering, native Looker Studio connection.
 
 **Why Airflow?**
-Airflow provides orchestration for batch reference data loads with retry logic, dependency management, execution history, and a monitoring UI. A cron job would have none of these.
+Airflow provides orchestration for batch reference data loads with retry logic, dependency management, execution history, and a monitoring UI. In production this would migrate to Cloud Composer with zero DAG code changes.
 
 ## Note on Whale Hotline API
-The original design used the Whale Hotline API (hotline.whalemuseum.org) for live marine mammal sightings. This domain was unreachable from the deployment environment due to network restrictions. The pipeline uses the OBIS API instead, which provides real, validated marine species occurrence data for 8 whale and dolphin species. The ingestion code is structured identically and would work with the Whale Hotline API with zero architectural changes.
-EOF
+The original design used the Whale Hotline API for live marine mammal sightings. This domain was unreachable from the deployment environment due to network restrictions. The pipeline uses the OBIS API instead, which provides real, validated marine species occurrence data for 8 whale and dolphin species. The ingestion code is structured identically and would work with the Whale Hotline API with zero architectural changes.
