@@ -1,0 +1,4 @@
+project_id       = "your-gcp-project-id"
+region           = "us-east1"
+credentials_file = "/home/codespace/.gcp/ocean-pipeline-runner-sa.json"
+bigquery_dataset = "ocean_analytics"
