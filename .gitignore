@@ -224,3 +224,10 @@ terraform/.terraform.lock.hcl
 .env
 .env.local
 .env.*.local
+
+# Terraform auto-generated
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.backup
+terraform/.terraform.lock.hcl
+terraform/gcloud
