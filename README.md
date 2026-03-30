@@ -1,7 +1,52 @@
 cat > /workspaces/ocean-analytics-pipeline/README.md << 'EOF'
+
+## Problem Statement
+
+Our oceans cover 71% of Earth's surface and are the primary driver of global climate, weather patterns, and biodiversity. Yet real-time ocean monitoring data is scattered across dozens of agencies, APIs, and research institutions — making it nearly impossible for researchers, conservationists, and policymakers to get a unified view of what's happening in our oceans right now.
+
+This project addresses three interconnected questions:
+
+**1. What are current ocean conditions globally?**
+NOAA operates 900+ buoys across every ocean, each reporting wave height, water temperature, wind speed, and pressure every hour. This data exists but is buried in raw text files that require significant effort to access and interpret.
+
+**2. Where are marine mammals being sighted, and is that changing?**
+Marine mammal populations are key indicators of ocean ecosystem health. Whale and dolphin sighting data exists through organizations like OBIS, but correlating it with environmental conditions requires joining datasets that were never designed to work together.
+
+**3. How do extreme events like storms and earthquakes affect ocean systems?**
+Seismic and storm events directly impact ocean conditions and marine wildlife behavior. Understanding these correlations requires a pipeline that can process multiple data streams simultaneously.
+
+### The Solution
+
+This pipeline ingests live data from NOAA buoys, marine mammal observation databases, and seismic monitoring systems — streams it through a unified GCP data platform — and presents it in an interactive dashboard that answers these questions in real time.
+
+The result: a single dashboard that shows ocean temperature anomalies, marine wildlife activity trends, and environmental event correlations — updated continuously from live data sources.
+
 # Ocean Analytics Pipeline
 
 An end-to-end oceanographic data pipeline built on GCP, streaming live ocean buoy readings and marine wildlife sightings through Pub/Sub, Dataflow, and BigQuery to a Looker Studio dashboard.
+
+
+## Problem Statement
+
+Our oceans cover 71% of Earth's surface and are the primary driver of global climate, weather patterns, and biodiversity. Yet real-time ocean monitoring data is scattered across dozens of agencies, APIs, and research institutions — making it nearly impossible for researchers, conservationists, and policymakers to get a unified view of what is happening in our oceans right now.
+
+This project addresses three interconnected questions:
+
+**1. What are current ocean conditions globally?**
+NOAA operates 900+ buoys across every ocean, each reporting wave height, water temperature, wind speed, and pressure every hour. This data exists but is buried in raw text files that require significant effort to access and interpret.
+
+**2. Where are marine mammals being sighted, and is that changing?**
+Marine mammal populations are key indicators of ocean ecosystem health. Whale and dolphin sighting data exists through organizations like OBIS, but correlating it with environmental conditions requires joining datasets that were never designed to work together.
+
+**3. How do extreme events like storms and earthquakes affect ocean systems?**
+Seismic and storm events directly impact ocean conditions and marine wildlife behavior. Understanding these correlations requires a pipeline that can process multiple data streams simultaneously.
+
+### The Solution
+
+This pipeline ingests live data from NOAA buoys, marine mammal observation databases, and seismic monitoring systems — streams it through a unified GCP data platform — and presents it in an interactive Looker Studio dashboard that answers these questions in real time.
+
+The result: a single dashboard showing ocean temperature conditions, marine wildlife activity trends, and environmental event correlations — updated continuously from live public data sources with no authentication required.
+
 
 ## Architecture
 
