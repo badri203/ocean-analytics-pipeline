@@ -1,0 +1,16 @@
+[
+  {"name": "storm_id", "type": "STRING", "mode": "REQUIRED"},
+  {"name": "name", "type": "STRING", "mode": "NULLABLE"},
+  {"name": "basin", "type": "STRING", "mode": "NULLABLE"},
+  {"name": "storm_type", "type": "STRING", "mode": "REQUIRED"},
+  {"name": "latitude", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "longitude", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "wind_speed_mph", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "pressure_mb", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "magnitude", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "depth_km", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "observed_at", "type": "TIMESTAMP", "mode": "NULLABLE"},
+  {"name": "ingested_at", "type": "TIMESTAMP", "mode": "NULLABLE"},
+  {"name": "source", "type": "STRING", "mode": "NULLABLE"},
+  {"name": "date", "type": "DATE", "mode": "REQUIRED"}
+]

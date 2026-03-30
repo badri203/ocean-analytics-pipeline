@@ -1,0 +1,23 @@
+[
+  {"name": "reading_id", "type": "STRING", "mode": "REQUIRED"},
+  {"name": "station_id", "type": "STRING", "mode": "REQUIRED"},
+  {"name": "latitude", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "longitude", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "timestamp", "type": "TIMESTAMP", "mode": "REQUIRED"},
+  {"name": "wind_direction_deg", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "wind_speed_ms", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "wind_gust_ms", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "wave_height_m", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "dominant_wave_period_s", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "avg_wave_period_s", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "wave_direction_deg", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "sea_level_pressure_hpa", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "air_temp_c", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "water_temp_c", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "dewpoint_temp_c", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "visibility_nmi", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "tide_ft", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "ingested_at", "type": "TIMESTAMP", "mode": "NULLABLE"},
+  {"name": "source", "type": "STRING", "mode": "NULLABLE"},
+  {"name": "date", "type": "DATE", "mode": "REQUIRED"}
+]

@@ -1,0 +1,16 @@
+[
+  {"name": "sighting_id", "type": "STRING", "mode": "REQUIRED"},
+  {"name": "species", "type": "STRING", "mode": "REQUIRED"},
+  {"name": "scientific_name", "type": "STRING", "mode": "NULLABLE"},
+  {"name": "latitude", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "longitude", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "count", "type": "INT64", "mode": "NULLABLE"},
+  {"name": "depth_m", "type": "FLOAT64", "mode": "NULLABLE"},
+  {"name": "sighted_at", "type": "TIMESTAMP", "mode": "NULLABLE"},
+  {"name": "dataset", "type": "STRING", "mode": "NULLABLE"},
+  {"name": "country", "type": "STRING", "mode": "NULLABLE"},
+  {"name": "locality", "type": "STRING", "mode": "NULLABLE"},
+  {"name": "ingested_at", "type": "TIMESTAMP", "mode": "NULLABLE"},
+  {"name": "source", "type": "STRING", "mode": "NULLABLE"},
+  {"name": "date", "type": "DATE", "mode": "REQUIRED"}
+]
