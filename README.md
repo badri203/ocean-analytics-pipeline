@@ -1,4 +1,3 @@
-cat > README.md << 'EOF'
 # Ocean Analytics Pipeline
 
 An end-to-end oceanographic data pipeline built on GCP, streaming live ocean buoy readings and marine wildlife sightings through Pub/Sub, Dataflow, and BigQuery to a Looker Studio dashboard.
