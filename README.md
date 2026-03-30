@@ -35,6 +35,9 @@ The result is not just a data pipeline — it is a **decision-support system** f
 
 ## Architecture
 
+<img width="569" height="450" alt="image" src="https://github.com/user-attachments/assets/9616b663-fa2f-4d0b-b10e-5c719217d992" />
+
+
 ### Streaming Pipeline (continuous, 24/7)
 ```
 NOAA NDBC Buoys (hourly)  ──┐
