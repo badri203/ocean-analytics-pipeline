@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  buoy-ingestion:
+    build: .
+    command: python ingestion/buoy/main.py
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/gcp-key.json
+      - GCP_PROJECT_ID=project-a3416167-bd30-4a48-987
+      - PUBSUB_BUOY_TOPIC=buoy-readings-topic
+    volumes:
+      - ~/.gcp/ocean-pipeline-runner-sa.json:/app/gcp-key.json:ro
+
+  whale-ingestion:
+    build: .
+    command: python ingestion/whale/main.py
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/gcp-key.json
+      - GCP_PROJECT_ID=project-a3416167-bd30-4a48-987
+      - PUBSUB_WHALE_TOPIC=whale-sightings-topic
+    volumes:
+      - ~/.gcp/ocean-pipeline-runner-sa.json:/app/gcp-key.json:ro
+
+  storm-ingestion:
+    build: .
+    command: python ingestion/storm/main.py
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/gcp-key.json
+      - GCP_PROJECT_ID=project-a3416167-bd30-4a48-987
+      - PUBSUB_STORM_TOPIC=storm-tracks-topic
+    volumes:
+      - ~/.gcp/ocean-pipeline-runner-sa.json:/app/gcp-key.json:ro
