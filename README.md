@@ -37,7 +37,7 @@ The result is not just a data pipeline — it is a **decision-support system** f
 
 ### Streaming Pipeline (continuous, 24/7)
 ```
-NOAA NDBC Buoys (hourly) ──┐
+NOAA NDBC Buoys (hourly)  ──┐
 OBIS Marine Mammals (30min) ├──→ Pub/Sub (3 topics) ──→ Dataflow (Apache Beam) ──→ GCS + BigQuery
 USGS/NHC Storm Events (1hr) ┘
 ```
